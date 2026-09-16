@@ -229,6 +229,12 @@ declare -A PLATFORMS=(
         SOCDTB='parrot-gen1.dtb'
         DEVICES='pdx246'
     "
+    ['yodo']="
+        COMPRESSED=false
+        SOC='kalama'
+        SOCDTB='kalama-v2.dtb'
+        DEVICES='pdx234 pdx237'
+    "
     ['elbe']="
         COMPRESSED=false
         SOC='parrot'
