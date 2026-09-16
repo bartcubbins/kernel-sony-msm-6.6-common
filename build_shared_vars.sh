@@ -217,6 +217,12 @@ KERNEL_TMP=${build_directory:-$ANDROID_ROOT/out/kernel-6.6}
 #     key and its configuration block.
 # -------------------------------------------------------------------------
 declare -A PLATFORMS=(
+    ['nagara']="
+        COMPRESSED=false
+        SOC='waipio'
+        SOCDTB='waipio-v2.dtb'
+        DEVICES='pdx223 pdx224'
+    "
     ['columbia']="
         COMPRESSED=false
         SOC='parrot'
