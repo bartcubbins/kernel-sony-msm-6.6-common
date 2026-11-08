@@ -241,4 +241,10 @@ declare -A PLATFORMS=(
         SOCDTB='parrot.dtb'
         DEVICES='pdx257'
     "
+    ['asahi']="
+        COMPRESSED=false
+        SOC='pineapple'
+        SOCDTB='pineapple-v2.dtb'
+        DEVICES='pdx245'
+    "
 )
