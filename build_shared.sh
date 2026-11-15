@@ -36,15 +36,14 @@ for platform in "${!PLATFORMS[@]}"; do
         # and performing the build process.
         make_cmd="make $BUILD_ARGS O=$KERNEL_TMP_PLATFORM"
 
-        # Keep kernel tmp when building for a specific platform or when using keep tmp
-        [ "${keep_kernel_tmp:-}" != "true" ] && rm -rf "${KERNEL_TMP_PLATFORM}"
+        # Create kernel temporary directory.
         mkdir -p "${KERNEL_TMP_PLATFORM}"
 
         PLATFORM_KERNEL_OUT=$KERNEL_TOP/common-kernel/$platform
         mkdir -p "$PLATFORM_KERNEL_OUT"
 
         # In case this is a dirty rebuild, delete all DTBs and DTBOs so that they
-        # won't be erroneously copied from a build for a different platform
+        # won't be erroneously copied from a build for a different platform.
         find "$KERNEL_TMP_PLATFORM/arch/arm64/boot/dts/vendor/{qcom,somc}/" \( -name *.dtb -o -name *.dtbo \) -delete 2>/dev/null || true
 
         # Truncate the log at the start of the build for a specific platform.
@@ -95,6 +94,11 @@ for platform in "${!PLATFORMS[@]}"; do
         # Some files, such as the kernel image, may be marked executable (755) by
         # the build system.
         find "$PLATFORM_KERNEL_OUT/" -type f | xargs chmod 644
+
+        # Remove kernel tmp after a successful build unless explicitly requested to keep it.
+        if [ "${keep_kernel_tmp:-}" != "true" ] && [ -z "${only_build_for:-}" ]; then
+            rm -rf "${KERNEL_TMP_PLATFORM}"
+        fi
     fi
 done
 
